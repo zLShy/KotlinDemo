@@ -35,6 +35,16 @@ open class BaseActicity: AppCompatActivity() {
         ActivityCompat.requestPermissions(this, permissions, code)
     }
 
+    /**
+     * 申请权限方法
+     *
+     * @param code        返回码
+     * @param permissions 具体权限
+     */
+    fun requestMorePermissions(code: Int, permissions: Array<String>) {
+        ActivityCompat.requestPermissions(this, permissions, code)
+    }
+
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
@@ -43,28 +53,37 @@ open class BaseActicity: AppCompatActivity() {
             Constants.CALL_PHONE_CODE -> callPhone()
             Constants.SEM_MESSAGE_CODE -> sendSEM()
             Constants.PHONE_LOCATION_CODE -> getLocation()
+            Constants.PHONE_STATE_CODE -> readPhone()
+            Constants.MIX_AUTHORITY_CODE -> doMixFunction()
             else -> {
             }
         }
+    }
+
+    open fun readPhone() {
+
     }
 
     open fun getLocation() {
 
     }
 
-    fun sendSEM() {
+   open fun sendSEM() {
 
     }
 
-    fun callPhone() {
+    open fun callPhone() {
 
     }
 
-    fun takePhoto() {
+    open fun takePhoto() {
 
     }
 
-    fun doSDcardPermission() {
+    open fun doSDcardPermission() {
+
+    }
+    open fun doMixFunction() {
 
     }
 }

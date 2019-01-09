@@ -2,6 +2,7 @@ package retrifitRequest
 
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
+import okhttp3.ResponseBody
 
 /**
  * Created by zhangli on 2018/11/8.

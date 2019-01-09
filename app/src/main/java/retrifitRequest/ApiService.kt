@@ -1,6 +1,7 @@
 package retrifitRequest
 
 import io.reactivex.Observable
+import okhttp3.ResponseBody
 import retrofit2.http.*
 
 /**
@@ -14,6 +15,6 @@ interface ApiService {
     fun getMovies(@Query("start") start :Int, @Query("count") count :Int): Observable<Any>
 
     @FormUrlEncoded
-    @POST()
+    @POST("")
     fun checkUser(@Field("") userName :String,@Field("") userPass :String):Observable<Any>
 }

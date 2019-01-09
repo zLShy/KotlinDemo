@@ -18,5 +18,7 @@ class Constants {
         val PHONE_STATE_CODE = 0x05
         //定位
         val PHONE_LOCATION_CODE = 0x06
+        //混合权限
+        val MIX_AUTHORITY_CODE = 0x07
     }
 }
