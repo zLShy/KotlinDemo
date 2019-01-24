@@ -18,17 +18,17 @@ class LoginPresenterImp(iLoginView: ILoginView):ILoginPresenter {
     }
     override fun doLogin() {
         mILoginView!!.showProgress()
-        mILoginDao!!.checkUser(mILoginView!!.getUserName(),mILoginView!!.getUserPass(),object : CallBack {
-            override fun onSuccess(any: Any) {
-                mILoginView!!.hideProgress()
-
-            }
-
-            override fun onFailure(any: Any) {
-                mILoginView!!.hideProgress()
-            }
-
-        })
+//        mILoginDao!!.checkUser(mILoginView!!.getUserName(),mILoginView!!.getUserPass(),object : CallBack {
+//            override fun onSuccess(any: Any) {
+//                mILoginView!!.hideProgress()
+//
+//            }
+//
+//            override fun onFailure(any: Any) {
+//                mILoginView!!.hideProgress()
+//            }
+//
+//        })
     }
 
 }

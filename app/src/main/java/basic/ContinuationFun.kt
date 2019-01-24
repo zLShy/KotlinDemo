@@ -35,17 +35,17 @@ class ContinuationFun {
 //           }else{
 //               continuation.resumeWithException(throw Exception("hhh"))
 //           }
-           ApiMethods().getInspectInfo(ProgressObserver(object : CallBack {
-               override fun onSuccess(any: Any) {
-                   any?.let { continuation::resume }
-               }
-
-               override fun onFailure(any: Any) {
-                   Log.e("TGA","Failure");
-
-               }
-
-           }))
+//           ApiMethods().getInspectInfo(ProgressObserver(object : CallBack {
+//               override fun onSuccess(any: Any) {
+//                   any?.let { continuation::resume }
+//               }
+//
+//               override fun onFailure(any: Any) {
+//                   Log.e("TGA","Failure");
+//
+//               }
+//
+//           }))
            Log.e("CON","finish")
        }catch (e:Exception){
            continuation.resumeWithException(e)

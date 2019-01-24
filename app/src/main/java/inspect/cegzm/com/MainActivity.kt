@@ -30,32 +30,32 @@ class MainActivity : BaseActicity() {
             x+y
         }
         Log.e("TGA", add(2,3).toString())
-        ApiMethods().getInspectInfo(ProgressObserver(object : CallBack {
-            override fun onSuccess(any: Any) {
-                Log.e("TGA",any.toString());
-            }
-
-            override fun onFailure(any: Any) {
-                Log.e("TGA","Failure");
-
-            }
-
-        }))
+//        ApiMethods().getInspectInfo(ProgressObserver(object : CallBack {
+//            override fun onSuccess(any: Any) {
+//                Log.e("TGA",any.toString());
+//            }
+//
+//            override fun onFailure(any: Any) {
+//                Log.e("TGA","Failure");
+//
+//            }
+//
+//        }))
 
         load_btn.setOnClickListener { v ->
 
             var job = launch {
-                ApiMethods().getInspectInfo(ProgressObserver(object : CallBack {
-                    override fun onSuccess(any: Any) {
-                        Log.e("TGA",any.toString());
-                    }
-
-                    override fun onFailure(any: Any) {
-                        Log.e("TGA","Failure");
-
-                    }
-
-                }))
+//                ApiMethods().getInspectInfo(ProgressObserver(object : CallBack {
+//                    override fun onSuccess(any: Any) {
+//                        Log.e("TGA",any.toString());
+//                    }
+//
+//                    override fun onFailure(any: Any) {
+//                        Log.e("TGA","Failure");
+//
+//                    }
+//
+//                }))
             }
             var date = "s".let {
                 "123"

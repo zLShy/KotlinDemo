@@ -21,14 +21,24 @@ import utils.QRCodeUtil
 import android.telephony.TelephonyManager
 import bean.Device
 import com.google.gson.Gson
+import com.loopj.android.http.AsyncHttpClient
+import com.loopj.android.http.AsyncHttpResponseHandler
+import com.loopj.android.http.TextHttpResponseHandler
+import cz.msebera.android.httpclient.Header
+import okhttp3.ResponseBody
 import org.json.JSONObject
+import retrifitRequest.ApiMethods
+import retrifitRequest.CallBack
+import retrifitRequest.ProgressObserver
+import retrifitRequest.SdCardUtils
+import retrofit2.Response
 
 
 class GpsTestActivity : BaseActicity() {
 
 
     private val GPS_LOCATION_NAME = android.location.LocationManager.GPS_PROVIDER
-    var permissions  = arrayOf<String>(Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.READ_PHONE_STATE)
+    var permissions  = arrayOf<String>(Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.READ_PHONE_STATE,Manifest.permission.WRITE_EXTERNAL_STORAGE)
     @TargetApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,8 +46,20 @@ class GpsTestActivity : BaseActicity() {
         if (hasPermission(Manifest.permission.ACCESS_FINE_LOCATION) && hasPermission(Manifest.permission.READ_PHONE_STATE)){
             getGPS()
             getPhoneInfo()
+            showOpenInfo();
         }else{
             requestMorePermissions(Constants.MIX_AUTHORITY_CODE,permissions)
+        }
+
+
+
+    }
+
+    private fun showOpenInfo() {
+        if (SdCardUtils.redSavaInfo().equals("")){
+            open_info.setText("开机上传失败次数: 0")
+        }else{
+            open_info.setText("开机上传失败次数: "+SdCardUtils.redSavaInfo())
         }
     }
 
@@ -46,6 +68,7 @@ class GpsTestActivity : BaseActicity() {
         super.doMixFunction()
         getGPS()
         getPhoneInfo()
+        showOpenInfo()
     }
     @SuppressLint("MissingPermission")
     fun getGPS() {
@@ -71,8 +94,8 @@ class GpsTestActivity : BaseActicity() {
     }
 
     private fun upUi(location: Location?) {
-        loction_tv.setText("latitude="+location!!.latitude+"\nlongitude="+location!!.longitude)
-
+        latitude_tv.setText("latitude="+location!!.latitude)
+        longitude_tv.setText("longitude="+location!!.longitude)
     }
 
     private var LoctionListener = object : LocationListener{
@@ -106,9 +129,15 @@ class GpsTestActivity : BaseActicity() {
         phone_imei.setText("IMEI:  "+tm.deviceId)
         phone_imsi.setText("IMSI:  "+tm.subscriberId)
         phone_iccid.setText("ICCID:  "+tm.simSerialNumber)
-        var mDevice = Device(tm.deviceId,tm.subscriberId,tm.simSerialNumber)
-        var requestStr = Gson().toJson(mDevice)
-        qrcode.setImageBitmap(QRCodeUtil.createQRCodeBitmap(requestStr, 400))
+        try {
+            var mDevice = Device(tm.deviceId,tm.subscriberId,tm.simSerialNumber)
+            var requestStr = Gson().toJson(mDevice)
+            qrcode.setImageBitmap(QRCodeUtil.createQRCodeBitmap(requestStr, 400))
+        }catch (e:Exception){
+            qrcode.setImageBitmap(QRCodeUtil.createQRCodeBitmap(Gson().toJson(Device(phone_imei.text.toString().replace("IMEI:  ",""),phone_imsi.text.toString().replace("IMSI:  ",""),phone_iccid.text.toString().replace("ICCID:  ",""))), 400))
+            e.printStackTrace()
+        }
+
     }
 
 }

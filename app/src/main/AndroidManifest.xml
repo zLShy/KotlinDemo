@@ -19,18 +19,23 @@
     <!-- 精细定位授权 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" tools:ignore="ProtectedPermissions"/>
-    <uses-permission android:name="android.permission.READ_NETWORK_USAGE_HISTORY" tools:ignore="ProtectedPermissions"/>
+    <uses-permission
+        android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission
+        android:name="android.permission.READ_NETWORK_USAGE_HISTORY"
+        tools:ignore="ProtectedPermissions" />
 
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/app_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/app_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".GpsTestActivity">
+        <activity android:name=".GpsTestActivity"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -39,12 +44,14 @@
         </activity>
         <activity android:name=".LoginActivity" />
         <!-- <activity android:name=".BannerTest"></activity> -->
+        <service android:name="utils.CheckExitService"/>
         <meta-data
             android:name="inspect.cegzm.com.GlidCache"
             android:value="GlideModule" />
 
         <!-- <activity android:name=".GpsTestActivity"></activity> -->
-        <!--<activity android:name=".FlowTestActivity"></activity>-->
+        <!-- <activity android:name=".FlowTestActivity"></activity> -->
+        <!--<activity android:name=".ImageTestActivity"></activity>-->
     </application>
 
 </manifest>

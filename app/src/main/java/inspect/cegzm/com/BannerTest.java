@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -16,12 +18,19 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+
+import org.json.JSONArray;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
+import cz.msebera.android.httpclient.Header;
+import retrifitRequest.SdCardUtils;
+import utils.CheckExitService;
 import utils.FileSizeUtil;
 
 /**
@@ -41,6 +50,8 @@ public class BannerTest extends Activity {
         this.mBanner = findViewById(R.id.banner_test);
         this.editText = findViewById(R.id.et);
 
+        savaInfo1();
+//        getInfo();
 //        try{
 //            Field field = TextView.class.getDeclaredField("mCursorDrawableRes");
 //            field.setAccessible(true);
@@ -56,6 +67,7 @@ public class BannerTest extends Activity {
             mTitleList.add("234");
         }
 
+        getHello();
         mBanner.setData(mImageList,mTitleList);
         mBanner.setAutoPlayAble(true);
         mBanner.setAdapter(new BGABanner.Adapter<ImageView,String>() {
@@ -82,6 +94,8 @@ public class BannerTest extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        Intent intent=new Intent(this, CheckExitService.class);
+        startService(intent);
     }
 
     @Override
@@ -107,5 +121,61 @@ public class BannerTest extends Activity {
             return false;
         }
         return false;
+    }
+
+    private void getHello() {
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get(this, "http://192.168.0.79:9999/hello", new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                Log.e("TGA","==success===="+new String(responseBody));
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                Log.e("TGA","==fail");
+
+            }
+        });
+    }
+
+    //避免桌面进入重新实例化入口activity
+    private void judge() {
+        if (!this.isTaskRoot()) {//判断是否为任务栈根部
+            Intent intent = getIntent();
+            if (intent != null){
+                String action = intent.getAction();
+                if (intent.hasCategory(Intent.CATEGORY_LAUNCHER) && Intent.ACTION_MAIN.equals(action)){
+                    finish();
+                    return;
+                }
+            }
+        }
+    }
+
+    private void saveInfo() {
+       String file =  Environment.getExternalStorageDirectory()+"/CegzLog.txt";
+       String Content  = "hello world";
+       long Firsttime = System.currentTimeMillis();
+        SdCardUtils.saveInfo(file,Content);
+    }
+
+    private void savaInfo1() {
+        String file =  Environment.getExternalStorageDirectory()+"/CegzLog.txt";
+        String Content  = "hello world";
+        long Firsttime = System.currentTimeMillis();
+        SdCardUtils.bufferSave(Content,file);
+    }
+    private void getInfo() {
+        String file =  Environment.getExternalStorageDirectory()+"/CegzLog.txt";
+        Log.e("TGA",SdCardUtils.redSavaInfo());
+
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        finish();
+        return super.onKeyDown(keyCode, event);
+
     }
 }

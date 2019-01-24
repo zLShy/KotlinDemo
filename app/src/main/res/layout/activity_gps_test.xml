@@ -6,19 +6,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/gps_switch_tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/gps_tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/loction_tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
     <LinearLayout
         android:gravity="center"
         android:orientation="horizontal"
@@ -34,6 +21,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <TextView
+                android:id="@+id/gps_switch_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/gps_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/latitude_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/longitude_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
                 android:id="@+id/phone_imei"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -43,6 +46,10 @@
                 android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/phone_iccid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/open_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>

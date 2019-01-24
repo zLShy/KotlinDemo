@@ -1,9 +1,12 @@
 package com.zl.map.Utils
 
 import android.content.pm.PackageManager
+import android.os.Build
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
+import android.view.View
+import android.view.WindowManager
 
 /**
  * Created by zhangli on 2018/7/27.
@@ -85,5 +88,45 @@ open class BaseActicity: AppCompatActivity() {
     }
     open fun doMixFunction() {
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+//        hideBottomUIMenu()
+//        steepStatusBar()
+    }
+
+    /**
+     * 隐藏虚拟按键，并且全屏
+     */
+    protected fun hideBottomUIMenu() {
+        //隐藏虚拟按键，并且全屏
+        if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) { // lower api
+            val v = this.window.decorView
+            v.systemUiVisibility = View.GONE
+        } else if (Build.VERSION.SDK_INT >= 19) {
+            //for new api versions.
+            val decorView = window.decorView
+            val uiOptions = (View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or View.SYSTEM_UI_FLAG_FULLSCREEN)
+            decorView.systemUiVisibility = uiOptions
+        }
+
+    }
+
+    /**
+     * [沉浸状态栏]
+     */
+    private fun steepStatusBar() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            // 透明状态栏
+            window.addFlags(
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+            // 透明导航栏
+            window.addFlags(
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+
+
+        }
     }
 }

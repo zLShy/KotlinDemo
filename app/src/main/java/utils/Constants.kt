@@ -6,7 +6,7 @@ package com.zl.map.Utils
 class Constants {
 
     companion object {
-        val BASE_URL = "http://api.douban.com/v2/movie/"
+        val BASE_URL = "http://192.168.0.79:9999/"
         val WRITE_READ_EXTERNAL_CODE = 0x01
         //照相
         val CAMERA_CODE = 0x02
